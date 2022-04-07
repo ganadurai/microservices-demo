@@ -17,7 +17,7 @@ spec:
       # serviceAccountName: default
       containers:
         - name: server
-          image: gcr.io/x-project-1-344916/microservices-demo/frontend:v2
+          image: gcr.io/asm-project-3/microservices-demo/frontend:v2
           ports:
           - containerPort: 8080
           readinessProbe:
