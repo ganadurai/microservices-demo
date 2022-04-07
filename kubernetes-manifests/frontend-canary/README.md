@@ -137,26 +137,22 @@ kubectl --context=${GKE1_CTX} edit deployment v1
 
 1. To rollback the canary changes for the external ingress (from browser)
 ```bash
-   
-   kubectl --context=${GKE1_CTX} delete -f frontend-destination-rules.yaml -n online-boutique
-   kubectl --context=${GKE2_CTX} delete -f frontend-destination-rules.yaml -n online-boutique
-
 
    kubectl --context=${GKE1_CTX} delete -f frontend-canary-ingress-service.yaml \
    -n online-boutique
    kubectl --context=${GKE2_CTX} delete -f frontend-canary-ingress-service.yaml \
    -n online-boutique
 
-```
-
-1. To rollback the canary changes for the internal svc ingress (from loadgen)
-```bash
-   
    kubectl --context=${GKE1_CTX} delete -f frontend-canary-service.yaml \
    -n online-boutique
    kubectl --context=${GKE2_CTX} delete -f frontend-canary-service.yaml \
    -n online-boutique
+
+   kubectl --context=${GKE1_CTX} -n online-boutique apply -f ${PROJECT_HOME}/online-boutique/release/istio-manifests.yaml
+   kubectl --context=${GKE2_CTX} -n online-boutique apply -f ${PROJECT_HOME}/online-boutique/release/istio-manifests.yaml
+
 ```
+
 
 
 
