@@ -7,6 +7,13 @@
     source setup.sh
     ```
 
+1. FOr building the application and creating the jar file
+    ```bash
+    export PATH=$PATH:/usr/local/google/home/ganadurai/Developer/maven/apache-maven-3.8.5/bin
+    mvn clean install package spring-boot:repackage
+    echo "commit and push the jar file"
+    ```
+
 1. Build the docker images
     ```bash
     docker build -t gcr.io/$PROJECT_ID/$GCR_REPO/api-client-java:v1 .
