@@ -5,7 +5,7 @@ WORKDIR /app
 RUN mkdir /app/dependency
 
 COPY target/dependency/*.* /app/dependency/
-COPY target/onlineboutique-api-client-1.0 /app
+COPY target/onlineboutique-api-client-1.0.jar /app
 
 EXPOSE 8080
 
