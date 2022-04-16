@@ -41,7 +41,7 @@ public class ProductCatalogService {
     @Value("${gRPC.useTLS}")
     private boolean gRPCServerUseTLS;
 
-    public String getProductsList() throws Exception {
+    private ManagedChannel getChannel() {
         ManagedChannel channel;
         if (gRPCServerUseTLS) {
             channel = ManagedChannelBuilder.forAddress(gRPCServer, Integer.parseInt(gRPCServerPort))
@@ -51,6 +51,11 @@ public class ProductCatalogService {
                 .usePlaintext()
                 .build();
         }
+        return channel;
+    }
+
+    public String getProductsList() throws Exception {
+        ManagedChannel channel = getChannel();
 
         ProductCatalogServiceGrpc.ProductCatalogServiceBlockingStub blockingStub = 
             ProductCatalogServiceGrpc.newBlockingStub(channel);
@@ -64,7 +69,7 @@ public class ProductCatalogService {
             throw e;
         }
         List<Product> productList = new ArrayList<Product>();
-        if (response.getProductsList() != null) {
+        if ((response != null) && (response.getProductsList() != null)) {
             productList = response.getProductsList();
             logger.info("Product listing: " + response.getProductsList().size());
         }
@@ -73,5 +78,59 @@ public class ProductCatalogService {
 
         return productListInJson;
     }
+
+    public String getProductById(String id) throws Exception {
+        ManagedChannel channel = getChannel();
+
+        ProductCatalogServiceGrpc.ProductCatalogServiceBlockingStub blockingStub = 
+            ProductCatalogServiceGrpc.newBlockingStub(channel);
+        
+        logger.info("Getting the product details...");
+
+        GetProductRequest request = GetProductRequest.newBuilder().setId(id).build();
+        Product productResponse;
+        try {
+            productResponse = blockingStub.getProduct(request);
+        } catch (StatusRuntimeException e) {
+            logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
+            throw e;
+        }
+
+        String productDetailsInJson = new Gson().toJson(productResponse);
+
+        return productDetailsInJson;
+    }
+
+    public String searchProduct(String query) {
+        ManagedChannel channel = getChannel();
+
+        ProductCatalogServiceGrpc.ProductCatalogServiceBlockingStub blockingStub = 
+            ProductCatalogServiceGrpc.newBlockingStub(channel);
+        
+        logger.info("search product...");
+
+        SearchProductsRequest request 
+            = SearchProductsRequest.newBuilder().setQuery(query).build();
+        SearchProductsResponse response;
+        try {
+            response = blockingStub.searchProducts(request);
+        } catch (StatusRuntimeException e) {
+            logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
+            throw e;
+        }
+        List<Product> productList = new ArrayList<Product>();
+        if ((response != null) && (response.getResultsList() != null)) {
+            productList = response.getResultsList();
+            logger.info("Product listing: " + response.getResultsList().size());
+        }
+
+        String productListInJson = new Gson().toJson(productList);
+
+        return productListInJson;
+
+
+    }
+
+
 
 }

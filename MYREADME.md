@@ -7,7 +7,7 @@
     source setup.sh
     ```
 
-1. FOr building the application and creating the jar file
+1. FOr building the application and creating the jar file use the cloudtop box
     ```bash
     cd ${WORKDIR}/api-client-java
     export PATH=$PATH:/usr/local/google/home/ganadurai/Developer/maven/apache-maven-3.8.5/bin
@@ -18,6 +18,7 @@
 1. Build the docker images
     ```bash
     cd ${WORKDIR}/api-client-java
+    git pull
     docker build -t gcr.io/$PROJECT_ID/$GCR_REPO/api-client-java:v1 .
     docker push gcr.io/$PROJECT_ID/$GCR_REPO/api-client-java:v1
     ```
@@ -65,8 +66,11 @@
 1. Deploy the kubernetes objects
     ```bash
     cd ${WORKDIR}/kubernetes-manifests/api-client
+    k1 delete deployment api-client-java
     k1 apply -f api-client-java-deployment.yaml
     k1 apply -f api-client-java-service.yaml
+    export API_ENDPOINT=$(k1 get svc api-client-java \
+     -o jsonpath={.status.loadBalancer.ingress..ip})
     ```
 
 
