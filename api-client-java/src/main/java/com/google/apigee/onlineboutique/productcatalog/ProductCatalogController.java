@@ -26,7 +26,10 @@ public class ProductCatalogController {
         this.productCatalogService = productCatalogService;
     }
 
-    @GetMapping("/list")
+    @GetMapping(
+        value="/list", 
+        produces = "application/json"
+    )
     public String getProductsList() {
         
         try {
