@@ -1,4 +1,4 @@
-package com.google.apigee.onlineboutique.productcatalog;
+package com.google.apigee.onlineboutique;
 
 import java.util.List;
 import java.util.Collections;
@@ -17,19 +17,42 @@ import com.google.apigee.onlineboutique.*;
 
 @RestController
 @SpringBootApplication
-@RequestMapping("/product-catalog")
-public class ProductCatalogController {
+@RequestMapping("/onlineboutique")
+public class OnlineBoutiqueController {
     
     @Autowired
     private ProductCatalogService productCatalogService;
 
     @Autowired
-    public ProductCatalogController(ProductCatalogService productCatalogService) {
+    private CurrencyService currencyService;
+
+    @Autowired
+    public OnlineBoutiqueController(
+        ProductCatalogService productCatalogService,
+        CurrencyService currencyService) {
         this.productCatalogService = productCatalogService;
+        this.currencyService = currencyService;
     }
 
     @RequestMapping(
-        value="/list", 
+        value="/currencies/list", 
+        method = RequestMethod.GET, 
+        produces = "application/json"
+    )
+    @ResponseBody
+    public String getCurrenciesList() {
+
+        try {
+            return currencyService.getCurrencyCodes();
+        } catch (Exception e) {
+            System.out.println("##########################################################################");
+            System.out.println("ERRO: " + e.getMessage());
+            return "{'error':, '" + e.getMessage() + "'}";
+        }
+    }
+
+    @RequestMapping(
+        value="/products/list", 
         method = RequestMethod.GET, 
         produces = "application/json"
     )
