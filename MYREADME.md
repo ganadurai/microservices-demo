@@ -26,7 +26,24 @@
     ```bash
 
     export GCP_GCR_SA="gcp-gcr-service-account"
-    export TOKEN_LOCATION=/home/admin_/x-project-1/microservices-demo/${GCP_GCR_SA}.json
+
+    gcloud iam service-accounts create $GCP_GCR_SA \
+        --project=$PROJECT_ID
+
+    gcloud projects add-iam-policy-binding $PROJECT_ID \
+        --member "serviceAccount:$GCP_GCR_SA@$PROJECT_ID.iam.gserviceaccount.com" \
+        --role "roles/containerregistry.ServiceAgent"
+
+    gcloud projects get-iam-policy $PROJECT_ID \
+        --flatten="bindings[].members" \
+        --format='table(bindings.role)' \
+        --filter="bindings.members:$GCP_GCR_SA@$PROJECT_ID.iam.gserviceaccount.com"
+
+    export TOKEN_LOCATION=${WORKDIR}/kubernetes-manifests/api-client/$GCP_GCR_SA.json
+    
+    gcloud iam service-accounts keys create ${TOKEN_LOCATION} \
+        --iam-account=$GCP_GCR_SA@$PROJECT_ID.iam.gserviceaccount.com \
+        --project=$PROJECT_ID
 
     k1 create secret docker-registry $GCP_GCR_SA-key \
         --docker-server=gcr.io --docker-username=_json_key \
