@@ -24,6 +24,7 @@ import javax.net.ssl.HttpsURLConnection;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
 
+import com.google.gson.Gson;
 import com.google.apigee.onlineboutique.*;
 
 @Service
