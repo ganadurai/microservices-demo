@@ -34,8 +34,8 @@ public class ProductCatalogController {
         } catch (Exception e) {
             System.out.println("##########################################################################");
             System.out.println("ERRO: " + e.getMessage());
+            return "{'error':, '" + e.getMessage() + "'}";
         }
-        return "{'error':, '" + e.getMessage() + "'}";
     }
 
     @GetMapping("/")
