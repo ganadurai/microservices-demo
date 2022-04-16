@@ -1,0 +1,27 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: api-client-java
+  namespace: online-boutique
+  labels:
+    app: api-client-java
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-client-java
+  template:
+    metadata:
+      labels:
+        app: api-client-java
+    spec:
+      containers:
+        - name: api-client-java
+          image: gcr.io/asm-project-346001/online-boutique/api-client-java:v1
+          imagePullPolicy: Always
+      restartPolicy: Always
+      dnsPolicy: ClusterFirst
+      schedulerName: default-scheduler
+      enableServiceLinks: true
+  strategy:
+    type: RollingUpdate

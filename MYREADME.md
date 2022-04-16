@@ -1,52 +1,26 @@
 
 1. Set the workdir, at the project home
     ```bash
+    
     export WORKDIR=$(pwd)
+    cd ${WORKDIR}/api-client-java
+    source setup.sh
     ```
 
-1. Create the namespace
+1. Build the docker images
     ```bash
-    kubectl apply -f ${WORKDIR}/online-boutique-namespace.yaml 
+    docker build -t gcr.io/$PROJECT_ID/$GCR_REPO/api-client-java:v1 .
+    docker push gcr.io/$PROJECT_ID/$GCR_REPO/api-client-java:v1
     ```
 
-2. Create the images
+1. Deploy the kubernetes objects
     ```bash
-    
-    cd ${WORKDIR}/src/adservice/
-    docker build -t local.docker/online-boutique/adservice:v1 . 
-
-    cd ${WORKDIR}/src/frontend/
-    docker build -t local.docker/online-boutique/frontend:v1 . 
-    
-    cd ${WORKDIR}/src/cartservice/src/
-    docker build -t local.docker/online-boutique/cartservice:v1 . 
-    
-    cd ${WORKDIR}/src/loadgenerator/
-    docker build -t local.docker/online-boutique/loadgenerator:v1 . 
-    
-    cd ${WORKDIR}/src/productcatalogservice/
-    docker build -t local.docker/online-boutique/productcatalogservice:v1 . 
-    
-    cd ${WORKDIR}/src/paymentservice/
-    docker build -t local.docker/online-boutique/paymentservice:v1 . 
-    
-    cd ${WORKDIR}/src/checkoutservice/
-    docker build -t local.docker/online-boutique/checkoutservice:v1 . 
-    
-    cd ${WORKDIR}/src/emailservice/
-    docker build -t local.docker/online-boutique/emailservice:v1 . 
-    
-    cd ${WORKDIR}/src/currencyservice/
-    docker build -t local.docker/online-boutique/currencyservice:v1 . 
-    
-    cd ${WORKDIR}/src/shippingservice/
-    docker build -t local.docker/online-boutique/shippingservice:v1 . 
-    
-    cd ${WORKDIR}/src/recommendationservice/
-    docker build -t local.docker/online-boutique/recommendationservice:v1 .
-
-    docker images
+    cd ${WORKDIR}/kubernetes-manifests/api-client
+    k1 apply -f api-client-java-deployment.yaml
+    k1 apply -f api-client-java-service.yaml
     ```
+
+
 
 1. Update the kubernetes for local deployment
     ```bash

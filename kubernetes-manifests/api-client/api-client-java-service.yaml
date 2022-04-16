@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: api-client-java
+  namespace: online-boutique
+  labels:
+    app: api-client-java
+spec:
+  type: LoadBalancer
+  selector:
+    app: api-client-java
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+  sessionAffinity: None
