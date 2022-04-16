@@ -26,10 +26,12 @@ public class ProductCatalogController {
         this.productCatalogService = productCatalogService;
     }
 
-    @GetMapping(
+    @RequestMapping(
         value="/list", 
+        method = RequestMethod.GET, 
         produces = "application/json"
     )
+    @ResponseBody
     public String getProductsList() {
         
         try {
