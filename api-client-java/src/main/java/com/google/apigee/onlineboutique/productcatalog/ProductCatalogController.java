@@ -27,7 +27,7 @@ public class ProductCatalogController {
     }
 
     @GetMapping("/list")
-    public List<Product> getProductsList() {
+    public String getProductsList() {
         
         try {
             return productCatalogService.getProductsList();
@@ -35,8 +35,7 @@ public class ProductCatalogController {
             System.out.println("##########################################################################");
             System.out.println("ERRO: " + e.getMessage());
         }
-        return Collections.emptyList();
-        
+        return "{'error':, '" + e.getMessage() + "'}";
     }
 
     @GetMapping("/")

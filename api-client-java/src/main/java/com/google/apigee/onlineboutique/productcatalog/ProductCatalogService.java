@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.List;
+import java.util.ArrayList;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import javax.net.ssl.SSLContext;
@@ -39,7 +40,7 @@ public class ProductCatalogService {
     @Value("${gRPC.useTLS}")
     private boolean gRPCServerUseTLS;
 
-    public List<Product> getProductsList() throws Exception {
+    public String getProductsList() throws Exception {
         ManagedChannel channel;
         if (gRPCServerUseTLS) {
             channel = ManagedChannelBuilder.forAddress(gRPCServer, Integer.parseInt(gRPCServerPort))
@@ -61,8 +62,15 @@ public class ProductCatalogService {
             logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
             throw e;
         }
-        logger.info("Product listing: " + response.getProductsList().size());
-        return response.getProductsList();
+        List<Product> productList = new ArrayList<Product>();
+        if (response.getProductsList() != null) {
+            productList = response.getProductsList();
+            logger.info("Product listing: " + response.getProductsList().size());
+        }
+
+        String productListInJson = new Gson().toJson(productList);
+
+        return productListInJson;
     }
 
 }
