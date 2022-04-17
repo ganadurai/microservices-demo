@@ -73,13 +73,15 @@ public class ShippingService {
         GetQuoteRequest.Builder requestBuilder = GetQuoteRequest.newBuilder()
                                     .setAddress(addressReq);
         
+        List<CartItem> cartItems = new ArrayList<CartItem>();
         for (int i=0; i < quoteReqDetails.getItems().length; i++) {
-            requestBuilder.setItems(i,
+            cartItems.add(
                 CartItem.newBuilder()
                     .setProductId(quoteReqDetails.getItems()[i].getProductId())
                     .setQuantity(quoteReqDetails.getItems()[i].getQuantity())
                     .build());
         }
+        requestBuilder.addAllItems(cartItems);
         
         GetQuoteRequest request = requestBuilder.build();
         GetQuoteResponse quoteResponse;

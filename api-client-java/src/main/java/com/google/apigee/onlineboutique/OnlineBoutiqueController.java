@@ -144,6 +144,7 @@ public class OnlineBoutiqueController {
             return shippingService.getQuote(quoteReqDetails);
         } catch (Exception e) {
             System.out.println("##########################################################################");
+            e.printStackTrace();
             System.out.println("ERRO: " + e.getMessage());
             return "{'error':, '" + e.getMessage() + "'}";
         }
