@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.apigee.onlineboutique.productcatalog.ProductCatalogService;
 import com.google.apigee.onlineboutique.currency.CurrencyService;
+import com.google.apigee.onlineboutique.recommendation.RecommendationService;
 import com.google.apigee.onlineboutique.*;
 
 @RestController
@@ -28,6 +29,9 @@ public class OnlineBoutiqueController {
 
     @Autowired
     private CurrencyService currencyService;
+
+    @Autowired
+    private RecommendationService recommendationService;
 
     @Autowired
     public OnlineBoutiqueController(
@@ -98,6 +102,23 @@ public class OnlineBoutiqueController {
         
         try {
             return productCatalogService.searchProduct(query);
+        } catch (Exception e) {
+            System.out.println("##########################################################################");
+            System.out.println("ERRO: " + e.getMessage());
+            return "{'error':, '" + e.getMessage() + "'}";
+        }
+    }
+
+    @RequestMapping(
+        value="/recommendations/{userid}", 
+        method = RequestMethod.GET, 
+        produces = "application/json"
+    )
+    @ResponseBody
+    public String getRecommendationsByUserId(@PathVariable("userid") String userId) {
+        
+        try {
+            return recommendationService.getRecommendations(userId);
         } catch (Exception e) {
             System.out.println("##########################################################################");
             System.out.println("ERRO: " + e.getMessage());
