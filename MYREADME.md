@@ -11,6 +11,7 @@
     ```bash
     cd ${WORKDIR}/api-client-java
     export PATH=$PATH:/usr/local/google/home/ganadurai/Developer/maven/apache-maven-3.8.5/bin
+    git pull
     mvn clean install package spring-boot:repackage
     echo "commit and push the jar file"
     ```

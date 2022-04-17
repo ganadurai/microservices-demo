@@ -6,10 +6,13 @@ import java.util.Collections;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.apigee.onlineboutique.productcatalog.ProductCatalogService;
 import com.google.apigee.onlineboutique.currency.CurrencyService;
 import com.google.apigee.onlineboutique.recommendation.RecommendationService;
+import com.google.apigee.onlineboutique.shipping.ShippingService;
+import com.google.apigee.onlineboutique.shipping.QuoteRequestDetails;
+
 import com.google.apigee.onlineboutique.*;
 
 @RestController
@@ -32,6 +38,9 @@ public class OnlineBoutiqueController {
 
     @Autowired
     private RecommendationService recommendationService;
+
+    @Autowired
+    private ShippingService shippingService;
 
     @Autowired
     public OnlineBoutiqueController(
@@ -126,6 +135,19 @@ public class OnlineBoutiqueController {
         }
     }
 
+    @PostMapping(
+        value = "/shipping/quote",
+        consumes = {MediaType.APPLICATION_JSON_VALUE},
+        produces = {MediaType.APPLICATION_JSON_VALUE})
+    public String postBody(@RequestBody QuoteRequestDetails quoteReqDetails) {
+        try {
+            return shippingService.getQuote(quoteReqDetails);
+        } catch (Exception e) {
+            System.out.println("##########################################################################");
+            System.out.println("ERRO: " + e.getMessage());
+            return "{'error':, '" + e.getMessage() + "'}";
+        }
+    }
 
     @GetMapping("/")
     public String test() {
