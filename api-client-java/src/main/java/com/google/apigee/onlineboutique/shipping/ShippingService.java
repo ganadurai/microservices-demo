@@ -32,7 +32,7 @@ public class ShippingService {
     
     private static final Logger logger = Logger.getLogger(ShippingService.class.getName());
 
-    @Value("${gRPC.server}")
+    @Value("${gRPC.shippingservice.server}")
     private String gRPCServer;
 
     @Value("${gRPC.port}")
@@ -72,7 +72,7 @@ public class ShippingService {
 
         GetQuoteRequest.Builder requestBuilder = GetQuoteRequest.newBuilder()
                                     .setAddress(addressReq);
-        /*
+        
         List<CartItem> cartItems = new ArrayList<CartItem>();
         for (int i=0; i < quoteReqDetails.getItems().length; i++) {
             cartItems.add(
@@ -82,7 +82,7 @@ public class ShippingService {
                     .build());
         }
         requestBuilder.addAllItems(cartItems);
-        */
+        
         GetQuoteRequest request = requestBuilder.build();
         GetQuoteResponse quoteResponse;
         try {

@@ -32,7 +32,7 @@ public class ProductCatalogService {
     
     private static final Logger logger = Logger.getLogger(ProductCatalogService.class.getName());
 
-    @Value("${gRPC.server}")
+    @Value("${gRPC.productcatalogservice.server}")
     private String gRPCServer;
 
     @Value("${gRPC.port}")

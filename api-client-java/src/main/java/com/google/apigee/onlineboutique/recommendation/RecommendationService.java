@@ -32,7 +32,7 @@ public class RecommendationService {
     
     private static final Logger logger = Logger.getLogger(RecommendationService.class.getName());
 
-    @Value("${gRPC.server}")
+    @Value("${gRPC.recommendationservice.server}")
     private String gRPCServer;
 
     @Value("${gRPC.port}")

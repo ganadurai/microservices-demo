@@ -32,7 +32,7 @@ public class CurrencyService {
     
     private static final Logger logger = Logger.getLogger(CurrencyService.class.getName());
 
-    @Value("${gRPC.server}")
+    @Value("${gRPC.currencyservice.server}")
     private String gRPCServer;
 
     @Value("${gRPC.port}")
