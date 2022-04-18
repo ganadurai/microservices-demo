@@ -35,7 +35,7 @@ public class CurrencyService {
     @Value("${gRPC.currencyservice.server}")
     private String gRPCServer;
 
-    @Value("${gRPC.port}")
+    @Value("${gRPC.currencyservice.port}")
     private String gRPCServerPort;
 
     @Value("${gRPC.useTLS}")

@@ -35,7 +35,7 @@ public class RecommendationService {
     @Value("${gRPC.recommendationservice.server}")
     private String gRPCServer;
 
-    @Value("${gRPC.port}")
+    @Value("${gRPC.recommendationservice.port}")
     private String gRPCServerPort;
 
     @Value("${gRPC.useTLS}")

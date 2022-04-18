@@ -35,7 +35,7 @@ public class ProductCatalogService {
     @Value("${gRPC.productcatalogservice.server}")
     private String gRPCServer;
 
-    @Value("${gRPC.port}")
+    @Value("${gRPC.productcatalogservice.port}")
     private String gRPCServerPort;
 
     @Value("${gRPC.useTLS}")

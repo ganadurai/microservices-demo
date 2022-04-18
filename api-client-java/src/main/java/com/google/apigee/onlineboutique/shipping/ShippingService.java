@@ -35,7 +35,7 @@ public class ShippingService {
     @Value("${gRPC.shippingservice.server}")
     private String gRPCServer;
 
-    @Value("${gRPC.port}")
+    @Value("${gRPC.shippingservice.port}")
     private String gRPCServerPort;
 
     @Value("${gRPC.useTLS}")
