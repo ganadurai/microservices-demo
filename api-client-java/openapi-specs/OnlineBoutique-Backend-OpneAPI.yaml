@@ -1,0 +1,89 @@
+openapi: 3.0.0
+info:
+  title: OnlineBoutique
+  version: 1.0.0
+servers:
+  - url: http://34.68.129.144
+paths:
+  /onlineboutique/products:
+    get:
+      tags:
+        - default
+      summary: Get Products
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /onlineboutique/product/OLJCESPC7Z:
+    get:
+      tags:
+        - default
+      summary: Get Product By Id
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /onlineboutique/product/search:
+    get:
+      tags:
+        - default
+      summary: Search Product
+      parameters:
+        - name: query
+          in: query
+          schema:
+            type: string
+          example: sunglass
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /onlineboutique/shipping/quote:
+    post:
+      tags:
+        - default
+      summary: Get Quote
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                address:
+                  streetAddress: Muffin Man
+                  city: London
+                  state: ''
+                  country: England
+                items:
+                  - productId: '23'
+                    quantity: 1
+                  - productId: '46'
+                    quantity: 3
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /onlineboutique/recommendations/101:
+    get:
+      tags:
+        - default
+      summary: Get Recommendations
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /onlineboutique/currencies/list:
+    get:
+      tags:
+        - default
+      summary: Get Currencies
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}

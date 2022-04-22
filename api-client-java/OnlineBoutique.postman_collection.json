@@ -1,0 +1,159 @@
+{
+	"info": {
+		"_postman_id": "1071b646-89e5-46aa-9c95-b50ef1dedfcf",
+		"name": "OnlineBoutique",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://34.68.129.144/onlineboutique/products",
+					"protocol": "http",
+					"host": [
+						"34",
+						"68",
+						"129",
+						"144"
+					],
+					"path": [
+						"onlineboutique",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Product By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://34.68.129.144/onlineboutique/product/OLJCESPC7Z",
+					"protocol": "http",
+					"host": [
+						"34",
+						"68",
+						"129",
+						"144"
+					],
+					"path": [
+						"onlineboutique",
+						"product",
+						"OLJCESPC7Z"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Product",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://34.68.129.144/onlineboutique/product/search?query=sunglass",
+					"protocol": "http",
+					"host": [
+						"34",
+						"68",
+						"129",
+						"144"
+					],
+					"path": [
+						"onlineboutique",
+						"product",
+						"search"
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "sunglass"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Quote",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"address\":{\n        \"streetAddress\":\"Muffin Man\",\n        \"city\":\"London\",\n        \"state\":\"\",\n        \"country\":\"England\"\n    },\n    \"items\":[\n        {\n            \"productId\":\"23\",\n            \"quantity\":1\n        },\n        {\n            \"productId\":\"46\",\n            \"quantity\":3\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/onlineboutique/shipping/quote",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"onlineboutique",
+						"shipping",
+						"quote"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Recommendations",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://34.68.129.144/onlineboutique/recommendations/101",
+					"protocol": "http",
+					"host": [
+						"34",
+						"68",
+						"129",
+						"144"
+					],
+					"path": [
+						"onlineboutique",
+						"recommendations",
+						"101"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Currencies",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://34.68.129.144/onlineboutique/currencies/list",
+					"protocol": "http",
+					"host": [
+						"34",
+						"68",
+						"129",
+						"144"
+					],
+					"path": [
+						"onlineboutique",
+						"currencies",
+						"list"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

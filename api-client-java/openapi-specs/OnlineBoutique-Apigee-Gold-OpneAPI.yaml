@@ -1,0 +1,103 @@
+openapi: 3.0.0
+info:
+  title: OnlineBoutique
+  version: 1.0.0
+servers:
+  - url: http://34.68.129.144.nip.io
+paths:
+  /onlineboutique/products:
+    get:
+      tags:
+        - default
+      summary: Get full listing of all products available to host for customer purchase
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /onlineboutique/product/{productId}:
+    get:
+      tags:
+        - default
+      summary: Get Product By Id
+      parameters:
+        - in: path
+          name: productId
+          schema:
+            type: string
+          required: true
+          description: Product Id to query the details for
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /onlineboutique/product/search:
+    get:
+      tags:
+        - default
+      summary: Search Product
+      parameters:
+        - name: query
+          in: query
+          schema:
+            type: string
+          example: sunglass
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /onlineboutique/shipping/quote:
+    post:
+      tags:
+        - default
+      summary: Get Quote
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                address:
+                  streetAddress: Muffin Man
+                  city: London
+                  state: ''
+                  country: England
+                items:
+                  - productId: '23'
+                    quantity: 1
+                  - productId: '46'
+                    quantity: 3
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /onlineboutique/recommendations/{userId}:
+    get:
+      tags:
+        - default
+      summary: Get Recommendations for a given user (by userId)
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+          description: User Id to query the recommendations for
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /onlineboutique/currencies/list:
+    get:
+      tags:
+        - default
+      summary: Get Currencies
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}

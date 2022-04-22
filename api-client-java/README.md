@@ -74,6 +74,12 @@
      -o jsonpath={.status.loadBalancer.ingress..ip})
     ```
 
+1. Create Postman collection with the api endpoints created OnlineBoutique.postman_collection.
+
+1. Convert the postman collection into OpenAPI spec 3.0. For more details on the conversin library refer to https://joolfe.github.io/postman-to-openapi/
+    ```bash
+    p2o ~/Downloads/OnlineBoutique.postman_collection.json -f OnlineBoutique-OpneAPI.yml 
+    ```
 
 
 

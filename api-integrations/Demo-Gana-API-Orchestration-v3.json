@@ -1,0 +1,242 @@
+{
+  "name": "projects/477811563879/locations/us/products/apigee/integrations/Demo-Gana-API-Orchestration/versions/8c02871e-0ceb-486d-a611-214c06b405ad",
+  "description": "Orchestrating API calls and merging the response contents",
+  "updateTime": "2022-04-22T15:32:15.299Z",
+  "createTime": "2022-04-22T15:31:23.977Z",
+  "lastModifierEmail": "ganadurai@google.com",
+  "triggerConfigs": [{
+    "label": "API Trigger",
+    "startTasks": [{
+      "taskId": "2"
+    }],
+    "properties": {
+      "Trigger name": "Demo-Gana-API-Orchestration_API_1"
+    },
+    "triggerType": "API",
+    "triggerNumber": "1",
+    "triggerId": "api_trigger/Demo-Gana-API-Orchestration_API_1"
+  }],
+  "taskConfigs": [{
+    "task": "GenericRestV2Task",
+    "taskId": "2",
+    "parameters": {
+      "throwError": {
+        "key": "throwError",
+        "value": {
+          "booleanValue": true
+        }
+      },
+      "responseBody": {
+        "key": "responseBody",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_2_responseBody`$"]
+          }
+        }
+      },
+      "httpParams": {
+        "key": "httpParams"
+      },
+      "responseHeader": {
+        "key": "responseHeader",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_2_responseHeader`$"]
+          }
+        }
+      },
+      "userAgent": {
+        "key": "userAgent",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "httpMethod": {
+        "key": "httpMethod",
+        "value": {
+          "stringValue": "GET"
+        }
+      },
+      "responseStatus": {
+        "key": "responseStatus",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_2_responseStatus`$"]
+          }
+        }
+      },
+      "url": {
+        "key": "url",
+        "value": {
+          "stringValue": "http://34.68.129.144/onlineboutique/recommendations/101"
+        }
+      },
+      "urlFetchingService": {
+        "key": "urlFetchingService",
+        "value": {
+          "stringValue": "HARPOON"
+        }
+      },
+      "requestorId": {
+        "key": "requestorId",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "urlQueryStrings": {
+        "key": "urlQueryStrings"
+      },
+      "requestBody": {
+        "key": "requestBody",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "followRedirects": {
+        "key": "followRedirects",
+        "value": {
+          "booleanValue": true
+        }
+      },
+      "additionalHeaders": {
+        "key": "additionalHeaders"
+      }
+    },
+    "nextTasks": [{
+      "taskId": "3"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Call REST Endpoint"
+  }, {
+    "task": "SubWorkflowForEachLoopV2Task",
+    "taskId": "1",
+    "parameters": {
+      "iterationElementMapping": {
+        "key": "iterationElementMapping",
+        "value": {
+          "stringValue": "productId"
+        }
+      },
+      "aggregatorParameterMapping": {
+        "key": "aggregatorParameterMapping",
+        "value": {
+          "jsonValue": "{\n  \u0027@type\u0027: \u0027type.googleapis.com/enterprise.crm.eventbus.proto.ParameterMap\u0027,\n  \u0027entries\u0027: [{\n    \u0027key\u0027: {\n      \u0027literalValue\u0027: {\n        \u0027stringValue\u0027: \u0027productDetailsJson\u0027\n      }\n    },\n    \u0027value\u0027: {\n      \u0027literalValue\u0027: {\n        \u0027stringValue\u0027: \u0027productDetailsJson\u0027\n      }\n    }\n  }]\n}"
+        }
+      },
+      "triggerId": {
+        "key": "triggerId",
+        "value": {
+          "stringValue": "api_trigger/Demo-Gana-Sub1-API-Orchestration_API_1"
+        }
+      },
+      "loopMetadata": {
+        "key": "loopMetadata",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_1_loopMetadata`$"]
+          }
+        }
+      },
+      "disableEucPropagation": {
+        "key": "disableEucPropagation",
+        "value": {
+          "booleanValue": false
+        }
+      },
+      "listToIterate": {
+        "key": "listToIterate",
+        "value": {
+          "stringValue": "$productIds$"
+        }
+      },
+      "workflowName": {
+        "key": "workflowName",
+        "value": {
+          "stringValue": "Demo-Gana-Sub1-API-Orchestration"
+        }
+      },
+      "requestParameterMapping": {
+        "key": "requestParameterMapping"
+      },
+      "overrideParameterMapping": {
+        "key": "overrideParameterMapping"
+      }
+    },
+    "nextTasks": [{
+      "taskId": "4"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "For Each Loop"
+  }, {
+    "task": "FieldMappingTask",
+    "taskId": "4",
+    "parameters": {
+      "FieldMappingConfigTaskParameterKey": {
+        "key": "FieldMappingConfigTaskParameterKey",
+        "value": {
+          "jsonValue": "{\n  \u0027@type\u0027: \u0027type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\u0027,\n  \u0027mappedFields\u0027: [{\n    \u0027inputField\u0027: {\n      \u0027fieldType\u0027: \u0027JSON_VALUE\u0027,\n      \u0027transformExpression\u0027: {\n        \u0027initialValue\u0027: {\n          \u0027referenceValue\u0027: \u0027$productDetailsListJson$\u0027\n        },\n        \u0027transformationFunctions\u0027: [{\n          \u0027functionType\u0027: {\n            \u0027jsonFunction\u0027: {\n              \u0027functionName\u0027: \u0027APPEND_ELEMENT\u0027\n            }\n          },\n          \u0027parameters\u0027: [{\n            \u0027initialValue\u0027: {\n              \u0027referenceValue\u0027: \u0027$productDetailsJson$\u0027\n            }\n          }]\n        }]\n      }\n    },\n    \u0027outputField\u0027: {\n      \u0027referenceKey\u0027: \u0027$productDetailsListJson$\u0027,\n      \u0027fieldType\u0027: \u0027JSON_VALUE\u0027,\n      \u0027cardinality\u0027: \u0027OPTIONAL\u0027\n    }\n  }]\n}"
+        }
+      }
+    },
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Data Mapping 1"
+  }, {
+    "task": "FieldMappingTask",
+    "taskId": "3",
+    "parameters": {
+      "FieldMappingConfigTaskParameterKey": {
+        "key": "FieldMappingConfigTaskParameterKey",
+        "value": {
+          "jsonValue": "{\n  \u0027@type\u0027: \u0027type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\u0027,\n  \u0027mappedFields\u0027: [{\n    \u0027inputField\u0027: {\n      \u0027fieldType\u0027: \u0027STRING_ARRAY\u0027,\n      \u0027transformExpression\u0027: {\n        \u0027initialValue\u0027: {\n          \u0027referenceValue\u0027: \u0027$`Task_2_responseBody`$\u0027\n        },\n        \u0027transformationFunctions\u0027: [{\n          \u0027functionType\u0027: {\n            \u0027stringFunction\u0027: {\n              \u0027functionName\u0027: \u0027TO_JSON\u0027\n            }\n          }\n        }, {\n          \u0027functionType\u0027: {\n            \u0027jsonFunction\u0027: {\n              \u0027functionName\u0027: \u0027TO_STRING_ARRAY\u0027\n            }\n          }\n        }]\n      }\n    },\n    \u0027outputField\u0027: {\n      \u0027referenceKey\u0027: \u0027$productIds$\u0027,\n      \u0027fieldType\u0027: \u0027STRING_ARRAY\u0027,\n      \u0027cardinality\u0027: \u0027OPTIONAL\u0027\n    }\n  }]\n}"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "1"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Data Mapping"
+  }],
+  "integrationParameters": [{
+    "key": "`Task_1_loopMetadata`",
+    "dataType": "JSON_VALUE",
+    "displayName": "`Task_1_loopMetadata`",
+    "isTransient": true,
+    "producer": "1_1"
+  }, {
+    "key": "`Task_2_responseHeader`",
+    "dataType": "STRING_VALUE",
+    "displayName": "`Task_2_responseHeader`",
+    "isTransient": true,
+    "producer": "1_2"
+  }, {
+    "key": "`Task_2_responseBody`",
+    "dataType": "STRING_VALUE",
+    "displayName": "`Task_2_responseBody`",
+    "isTransient": true,
+    "producer": "1_2"
+  }, {
+    "key": "`Task_2_responseStatus`",
+    "dataType": "STRING_VALUE",
+    "displayName": "`Task_2_responseStatus`",
+    "isTransient": true,
+    "producer": "1_2"
+  }, {
+    "key": "productIds",
+    "dataType": "STRING_ARRAY",
+    "displayName": "productIds"
+  }, {
+    "key": "productDetailsListJson",
+    "dataType": "JSON_VALUE",
+    "defaultValue": {
+      "jsonValue": "[]"
+    },
+    "displayName": "productDetailsListJson",
+    "jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"array\"\n}"
+  }, {
+    "key": "productDetailsJson",
+    "dataType": "JSON_VALUE",
+    "displayName": "productDetailsJson",
+    "jsonSchema": "{\n  \"id_\": \"OLJCESPC7Z\",\n  \"name_\": \"Sunglasses\",\n  \"description_\": \"Add a modern touch to your outfits with these sleek aviator sunglasses.\",\n  \"picture_\": \"/static/img/products/sunglasses.jpg\",\n  \"priceUsd_\": {\n    \"currencyCode_\": \"USD\",\n    \"units_\": 19.0,\n    \"nanos_\": 9.9E8,\n    \"memoizedIsInitialized\": -1.0,\n    \"unknownFields\": {\n      \"fields\": {\n      }\n    },\n    \"memoizedSize\": -1.0,\n    \"memoizedHashCode\": 0.0\n  },\n  \"categories_\": [\"accessories\"],\n  \"memoizedIsInitialized\": -1.0,\n  \"unknownFields\": {\n    \"fields\": {\n    }\n  },\n  \"memoizedSize\": -1.0,\n  \"memoizedHashCode\": 0.0\n}"
+  }]
+}

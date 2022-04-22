@@ -1,0 +1,192 @@
+{
+  "name": "projects/477811563879/locations/us/products/apigee/integrations/Demo-Gana-Sub1-API-Orchestration/versions/195dffe3-dd85-487a-8c7f-8781a8a45761",
+  "updateTime": "2022-04-22T15:03:14.001Z",
+  "createTime": "2022-04-22T15:02:23.271Z",
+  "lastModifierEmail": "ganadurai@google.com",
+  "triggerConfigs": [{
+    "label": "API Trigger",
+    "startTasks": [{
+      "taskId": "2"
+    }],
+    "properties": {
+      "Trigger name": "Demo-Gana-Sub1-API-Orchestration_API_1"
+    },
+    "triggerType": "API",
+    "triggerNumber": "1",
+    "triggerId": "api_trigger/Demo-Gana-Sub1-API-Orchestration_API_1"
+  }],
+  "taskConfigs": [{
+    "task": "GenericRestV2Task",
+    "taskId": "1",
+    "parameters": {
+      "throwError": {
+        "key": "throwError",
+        "value": {
+          "booleanValue": true
+        }
+      },
+      "responseBody": {
+        "key": "responseBody",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_1_responseBody`$"]
+          }
+        }
+      },
+      "httpParams": {
+        "key": "httpParams"
+      },
+      "responseHeader": {
+        "key": "responseHeader",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_1_responseHeader`$"]
+          }
+        }
+      },
+      "userAgent": {
+        "key": "userAgent",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "httpMethod": {
+        "key": "httpMethod",
+        "value": {
+          "stringValue": "GET"
+        }
+      },
+      "responseStatus": {
+        "key": "responseStatus",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_1_responseStatus`$"]
+          }
+        }
+      },
+      "url": {
+        "key": "url",
+        "value": {
+          "stringValue": "$productQueryCompleteUrl$"
+        }
+      },
+      "urlFetchingService": {
+        "key": "urlFetchingService",
+        "value": {
+          "stringValue": "HARPOON"
+        }
+      },
+      "requestorId": {
+        "key": "requestorId",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "urlQueryStrings": {
+        "key": "urlQueryStrings",
+        "value": {
+        }
+      },
+      "requestBody": {
+        "key": "requestBody",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "followRedirects": {
+        "key": "followRedirects",
+        "value": {
+          "booleanValue": true
+        }
+      },
+      "additionalHeaders": {
+        "key": "additionalHeaders"
+      }
+    },
+    "nextTasks": [{
+      "taskId": "3"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Call REST Endpoint"
+  }, {
+    "task": "FieldMappingTask",
+    "taskId": "3",
+    "parameters": {
+      "FieldMappingConfigTaskParameterKey": {
+        "key": "FieldMappingConfigTaskParameterKey",
+        "value": {
+          "jsonValue": "{\n  \u0027@type\u0027: \u0027type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\u0027,\n  \u0027mappedFields\u0027: [{\n    \u0027inputField\u0027: {\n      \u0027fieldType\u0027: \u0027JSON_VALUE\u0027,\n      \u0027transformExpression\u0027: {\n        \u0027initialValue\u0027: {\n          \u0027referenceValue\u0027: \u0027$`Task_1_responseBody`$\u0027\n        },\n        \u0027transformationFunctions\u0027: [{\n          \u0027functionType\u0027: {\n            \u0027stringFunction\u0027: {\n              \u0027functionName\u0027: \u0027TO_JSON\u0027\n            }\n          }\n        }]\n      }\n    },\n    \u0027outputField\u0027: {\n      \u0027referenceKey\u0027: \u0027$productDetailsJson$\u0027,\n      \u0027fieldType\u0027: \u0027JSON_VALUE\u0027,\n      \u0027cardinality\u0027: \u0027OPTIONAL\u0027\n    }\n  }]\n}"
+        }
+      }
+    },
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Data Mapping 1"
+  }, {
+    "task": "FieldMappingTask",
+    "taskId": "2",
+    "parameters": {
+      "FieldMappingConfigTaskParameterKey": {
+        "key": "FieldMappingConfigTaskParameterKey",
+        "value": {
+          "jsonValue": "{\n  \u0027@type\u0027: \u0027type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\u0027,\n  \u0027mappedFields\u0027: [{\n    \u0027inputField\u0027: {\n      \u0027fieldType\u0027: \u0027STRING_VALUE\u0027,\n      \u0027transformExpression\u0027: {\n        \u0027initialValue\u0027: {\n          \u0027referenceValue\u0027: \u0027$productQueryUrl$\u0027\n        },\n        \u0027transformationFunctions\u0027: [{\n          \u0027functionType\u0027: {\n            \u0027stringFunction\u0027: {\n              \u0027functionName\u0027: \u0027CONCAT\u0027\n            }\n          },\n          \u0027parameters\u0027: [{\n            \u0027initialValue\u0027: {\n              \u0027referenceValue\u0027: \u0027$productId$\u0027\n            }\n          }]\n        }]\n      }\n    },\n    \u0027outputField\u0027: {\n      \u0027referenceKey\u0027: \u0027$productQueryCompleteUrl$\u0027,\n      \u0027fieldType\u0027: \u0027STRING_VALUE\u0027,\n      \u0027cardinality\u0027: \u0027OPTIONAL\u0027\n    }\n  }]\n}"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "1"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Data Mapping"
+  }],
+  "integrationParameters": [{
+    "key": "`Task_1_responseStatus`",
+    "dataType": "STRING_VALUE",
+    "displayName": "`Task_1_responseStatus`",
+    "isTransient": true,
+    "producer": "1_1"
+  }, {
+    "key": "`Task_1_responseHeader`",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": ""
+    },
+    "displayName": "`Task_1_responseHeader`",
+    "inputOutputType": "OUT",
+    "isTransient": true,
+    "producer": "1_1"
+  }, {
+    "key": "productId",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": ""
+    },
+    "displayName": "productId",
+    "inputOutputType": "IN"
+  }, {
+    "key": "productQueryCompleteUrl",
+    "dataType": "STRING_VALUE",
+    "displayName": "productQueryCompleteUrl"
+  }, {
+    "key": "`Task_1_responseBody`",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": ""
+    },
+    "displayName": "`Task_1_responseBody`",
+    "isTransient": true,
+    "producer": "1_1"
+  }, {
+    "key": "productDetailsJson",
+    "dataType": "JSON_VALUE",
+    "displayName": "productDetailsJson",
+    "inputOutputType": "OUT",
+    "jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"categories_\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    },\n    \"id_\": {\n      \"type\": \"string\"\n    },\n    \"memoizedHashCode\": {\n      \"type\": \"number\"\n    },\n    \"description_\": {\n      \"type\": \"string\"\n    },\n    \"picture_\": {\n      \"type\": \"string\"\n    },\n    \"memoizedIsInitialized\": {\n      \"type\": \"number\"\n    },\n    \"priceUsd_\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"currencyCode_\": {\n          \"type\": \"string\"\n        },\n        \"units_\": {\n          \"type\": \"number\"\n        },\n        \"memoizedHashCode\": {\n          \"type\": \"number\"\n        },\n        \"memoizedIsInitialized\": {\n          \"type\": \"number\"\n        },\n        \"nanos_\": {\n          \"type\": \"number\"\n        },\n        \"unknownFields\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"fields\": {\n              \"type\": \"object\"\n            }\n          }\n        },\n        \"memoizedSize\": {\n          \"type\": \"number\"\n        }\n      }\n    },\n    \"name_\": {\n      \"type\": \"string\"\n    },\n    \"unknownFields\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"fields\": {\n          \"type\": \"object\"\n        }\n      }\n    },\n    \"memoizedSize\": {\n      \"type\": \"number\"\n    }\n  }\n}"
+  }, {
+    "key": "productQueryUrl",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": "http://34.68.129.144/onlineboutique/product/"
+    },
+    "displayName": "productQueryUrl"
+  }]
+}
