@@ -1,7 +1,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: api-client-java
+  name: api-client-java-internal
   annotations:
     networking.gke.io/load-balancer-type: "Internal"
   namespace: online-boutique
