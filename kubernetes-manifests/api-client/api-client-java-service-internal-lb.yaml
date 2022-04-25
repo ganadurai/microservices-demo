@@ -1,0 +1,18 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: api-client-java
+  annotations:
+    networking.gke.io/load-balancer-type: "Internal"
+  namespace: online-boutique
+  labels:
+    app: api-client-java
+spec:
+  type: LoadBalancer
+  selector:
+    app: api-client-java
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8081
+  sessionAffinity: None
