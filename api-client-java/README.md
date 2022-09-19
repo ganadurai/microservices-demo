@@ -7,6 +7,26 @@
     source setup.sh
     ```
 
+1. Set the GCP credentials
+    ```bash
+    GKE_PROJECT_ID=<project_id hosting gke cluster> 
+    gcloud config set project $GKE_PROJECT_ID
+    gcloud auth application-default login --no-launch-browser
+
+    export TOKEN=$(gcloud auth print-access-token)
+    ```
+
+1. Enable for GCP Repository auth
+    ```bash
+    VERSION=2.1.5
+    OS=linux  # or "darwin" for OSX, "windows" for Windows.
+    ARCH=amd64  # or "386" for 32-bit OSs, "arm64" for ARM 64.
+
+    curl -fsSL "https://github.com/GoogleCloudPlatform/docker-credential-gcr/releases/download/v${VERSION}/docker-credential-gcr_${OS}_${ARCH}-${VERSION}.tar.gz" \
+    | tar xz docker-credential-gcr \
+    && chmod +x docker-credential-gcr && sudo mv docker-credential-gcr /usr/bin/
+    ```
+    
 1. FOr building the application and creating the jar file use the cloudtop box
     ```bash
     cd ${WORKDIR}/api-client-java

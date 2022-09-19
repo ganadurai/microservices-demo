@@ -2,7 +2,6 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: api-client-java
-  namespace: online-boutique
   labels:
     app: api-client-java
 spec:

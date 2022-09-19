@@ -4,7 +4,6 @@ metadata:
   name: api-client-java-internal
   annotations:
     networking.gke.io/load-balancer-type: "Internal"
-  namespace: online-boutique
   labels:
     app: api-client-java
 spec:

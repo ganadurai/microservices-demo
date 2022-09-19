@@ -2,7 +2,6 @@ kind: Service
 apiVersion: v1
 metadata:
   name: api-client-java
-  namespace: online-boutique
   labels:
     app: api-client-java
 spec:

@@ -1,0 +1,142 @@
+{
+    "name": "projects/337802576775/locations/us-west1/products/apigee/integrations/cloudlogging/versions/5cfde0b1-6b94-40a8-a1bd-55946075db1d",
+    "updateTime": "2022-05-08T19:27:28.453Z",
+    "createTime": "2022-05-08T19:25:41.421Z",
+    "lastModifierEmail": "srinandans@google.com",
+    "triggerConfigs": [{
+      "label": "API Trigger",
+      "startTasks": [{
+        "taskId": "1"
+      }],
+      "properties": {
+        "Trigger name": "cloudlogging_API_1"
+      },
+      "triggerType": "API",
+      "triggerNumber": "1",
+      "triggerId": "api_trigger/cloudlogging_API_1"
+    }],
+    "taskConfigs": [{
+      "task": "GenericRestV2Task",
+      "taskId": "1",
+      "parameters": {
+        "throwError": {
+          "key": "throwError",
+          "value": {
+            "booleanValue": true
+          }
+        },
+        "responseBody": {
+          "key": "responseBody",
+          "value": {
+            "stringArray": {
+              "stringValues": ["$`Task_1_responseBody`$"]
+            }
+          }
+        },
+        "httpParams": {
+          "key": "httpParams",
+          "value": {
+            "jsonValue": "{\n  \u0027@type\u0027: \u0027type.googleapis.com/enterprise.crm.eventbus.proto.ParameterMap\u0027,\n  \u0027entries\u0027: [{\n    \u0027key\u0027: {\n      \u0027literalValue\u0027: {\n        \u0027stringValue\u0027: \u0027content-type\u0027\n      }\n    },\n    \u0027value\u0027: {\n      \u0027literalValue\u0027: {\n        \u0027stringValue\u0027: \u0027application/json\u0027\n      }\n    }\n  }]\n}"
+          }
+        },
+        "authConfig": {
+          "key": "authConfig",
+          "value": {
+            "jsonValue": "{\n  \u0027@type\u0027: \u0027type.googleapis.com/enterprise.crm.eventbus.authconfig.AuthConfigTaskParam\u0027,\n  \u0027authConfigId\u0027: \u0027ad8f83ee-4aad-456f-b55d-2a0a1def1a8a\u0027\n}"
+          }
+        },
+        "responseHeader": {
+          "key": "responseHeader",
+          "value": {
+            "stringArray": {
+              "stringValues": ["$`Task_1_responseHeader`$"]
+            }
+          }
+        },
+        "userAgent": {
+          "key": "userAgent",
+          "value": {
+            "stringValue": ""
+          }
+        },
+        "httpMethod": {
+          "key": "httpMethod",
+          "value": {
+            "stringValue": "POST"
+          }
+        },
+        "responseStatus": {
+          "key": "responseStatus",
+          "value": {
+            "stringArray": {
+              "stringValues": ["$`Task_1_responseStatus`$"]
+            }
+          }
+        },
+        "url": {
+          "key": "url",
+          "value": {
+            "stringValue": "https://logging.googleapis.com/v2/entries:write"
+          }
+        },
+        "urlFetchingService": {
+          "key": "urlFetchingService",
+          "value": {
+            "stringValue": "HARPOON"
+          }
+        },
+        "requestorId": {
+          "key": "requestorId",
+          "value": {
+            "stringValue": ""
+          }
+        },
+        "urlQueryStrings": {
+          "key": "urlQueryStrings"
+        },
+        "requestBody": {
+          "key": "requestBody",
+          "value": {
+            "stringValue": "$inputlogentry$"
+          }
+        },
+        "followRedirects": {
+          "key": "followRedirects",
+          "value": {
+            "booleanValue": true
+          }
+        },
+        "additionalHeaders": {
+          "key": "additionalHeaders"
+        }
+      },
+      "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+      "displayName": "Call REST Endpoint"
+    }],
+    "integrationParameters": [{
+      "key": "`Task_1_responseHeader`",
+      "dataType": "STRING_VALUE",
+      "displayName": "`Task_1_responseHeader`",
+      "isTransient": true,
+      "producer": "1_1"
+    }, {
+      "key": "`Task_1_responseBody`",
+      "dataType": "STRING_VALUE",
+      "displayName": "`Task_1_responseBody`",
+      "isTransient": true,
+      "producer": "1_1"
+    }, {
+      "key": "`Task_1_responseStatus`",
+      "dataType": "STRING_VALUE",
+      "displayName": "`Task_1_responseStatus`",
+      "isTransient": true,
+      "producer": "1_1"
+    }, {
+      "key": "inputlogentry",
+      "dataType": "JSON_VALUE",
+      "displayName": "inputlogentry",
+      "inputOutputType": "IN",
+      "jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"entries\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"jsonPayload\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"message\": {\n                \"type\": \"string\"\n              }\n            }\n          }\n        }\n      }\n    },\n    \"logName\": {\n      \"type\": \"string\"\n    },\n    \"resource\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"type\": {\n          \"type\": \"string\"\n        },\n        \"labels\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"project-id\": {\n              \"type\": \"string\"\n            }\n          }\n        }\n      }\n    }\n  }\n}"
+    }],
+    "userLabel": "3"
+  }
