@@ -26,7 +26,7 @@
     | tar xz docker-credential-gcr \
     && chmod +x docker-credential-gcr && sudo mv docker-credential-gcr /usr/bin/
     ```
-    
+
 1. FOr building the application and creating the jar file use the cloudtop box
     ```bash
     cd ${WORKDIR}/api-client-java
@@ -71,17 +71,17 @@
         --docker-server=gcr.io --docker-username=_json_key \
         --docker-password="$(cat ${TOKEN_LOCATION})" \
         --docker-email=$GCP_GCR_SA@$PROJECT_ID.iam.gserviceaccount.com \
-        -n online-boutique
+        -n $ONLINE_BOUTIQUE_NS
 
     k2 create secret docker-registry $GCP_GCR_SA-key \
         --docker-server=gcr.io --docker-username=_json_key \
         --docker-password="$(cat ${TOKEN_LOCATION})" \
         --docker-email=$GCP_GCR_SA@$PROJECT_ID.iam.gserviceaccount.com \
-        -n online-boutique
+        -n $ONLINE_BOUTIQUE_NS
 
-    k1 patch serviceaccount default -p '{"imagePullSecrets": [{"name": "gcp-gcr-service-account-key"}]}' -n online-boutique
+    k1 patch serviceaccount default -p '{"imagePullSecrets": [{"name": "gcp-gcr-service-account-key"}]}' -n $ONLINE_BOUTIQUE_NS
 
-    k2 patch serviceaccount default -p '{"imagePullSecrets": [{"name": "gcp-gcr-service-account-key"}]}' -n online-boutique
+    k2 patch serviceaccount default -p '{"imagePullSecrets": [{"name": "gcp-gcr-service-account-key"}]}' -n $ONLINE_BOUTIQUE_NS
     ```
 
 1. Deploy the kubernetes objects
@@ -89,9 +89,15 @@
     cd ${WORKDIR}/kubernetes-manifests/api-client
     k1 delete deployment api-client-java
     k1 apply -f api-client-java-deployment.yaml
+
+    echo "gcr.io/$PROJECT_ID/$GCR_REPO/api-client-java:v1"
+    (Edit the deployment, update the above path, and save)
+
+    k1 edit deployment api-client-java
+
     k1 apply -f api-client-java-service.yaml
     export API_ENDPOINT=$(k1 get svc api-client-java \
-     -o jsonpath={.status.loadBalancer.ingress..ip})
+     -o jsonpath={.status.loadBalancer.ingress..ip}); echo $API_ENDPOINT
     ```
 
 1. Create Postman collection with the api endpoints created OnlineBoutique.postman_collection.
@@ -100,6 +106,9 @@
     ```bash
     p2o ~/Downloads/OnlineBoutique.postman_collection.json -f OnlineBoutique-OpneAPI.yml 
     ```
-
+    
+1. Portal Test User
+    ganadurai+ob@google.com
+    Onlineboutique<OnnuRenduMoonuNallu>!
 
 
