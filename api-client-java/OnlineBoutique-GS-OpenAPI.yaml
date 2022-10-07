@@ -1,0 +1,154 @@
+openapi: 3.0.0
+info:
+  title: OnlineBoutique  - GoldSilver
+  version: 1.0.0
+servers:
+  - url: https://34.107.231.171.nip.io
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: apikey
+      in: query
+paths:
+  /v1/onlineboutique/products:
+    get:
+      tags:
+        - products
+      summary: Get Products
+      parameters:
+        - name: apikey
+          in: query
+          schema:
+            type: string
+          example: '{{apikey}}'
+      security:
+        - api_key: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/onlineboutique/product/{productId}:
+    get:
+      tags:
+        - product
+      summary: Get Product By Id
+      parameters:
+        - name: apikey
+          in: query
+          schema:
+            type: string
+          example: '{{apikey}}'
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+          example: 'OLJCESPC7Z'
+      security:
+        - api_key: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/onlineboutique/product/search:
+    get:
+      tags:
+        - products
+      summary: Search Product
+      parameters:
+        - name: query
+          in: query
+          schema:
+            type: string
+          example: sunglass
+        - name: apikey
+          in: query
+          schema:
+            type: string
+          example: '{{apikey}}'
+      security:
+        - api_key: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/onlineboutique/shipping/quote:
+    post:
+      tags:
+        - shipping
+      summary: Get Quote
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                address:
+                  streetAddress: Queens Dr
+                  city: London
+                  state: ''
+                  country: England
+                items:
+                  - productId: '23'
+                    quantity: 1
+                  - productId: '46'
+                    quantity: 3
+      parameters:
+        - name: apikey
+          in: query
+          schema:
+            type: string
+          example: '{{apikey}}'
+      security:
+        - api_key: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/onlineboutique/recommendations/{userId}:
+    get:
+      tags:
+        - user
+      summary: Get Recommendations
+      parameters:
+        - name: apikey
+          in: query
+          schema:
+            type: string
+          example: '{{apikey}}'
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+          example: '101'
+      security:
+        - api_key: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/onlineboutique/currencies/list:
+    get:
+      tags:
+        - shipping
+      summary: Get Currencies
+      parameters:
+        - name: apikey
+          in: query
+          schema:
+            type: string
+          example: '{{apikey}}'
+      security:
+        - api_key: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
