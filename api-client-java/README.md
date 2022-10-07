@@ -1,4 +1,10 @@
-
+1. Clone the repo
+    ```bash
+    git clone https://github.com/ganadurai/microservices-demo.git
+    cd microservices-demo
+    git switch enable-apis
+    ```
+    
 1. Set the workdir, at the project home
     ```bash
     
