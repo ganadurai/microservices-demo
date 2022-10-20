@@ -1,3 +1,99 @@
+Steps to enable api-client endpoints, exposing the gRPC services within the cluster:
+
+1. PRE-REQUISITE:
+Follow this doc to first setup the cluster for OnlineBoutique application.
+https://github.com/GoogleCloudPlatform/microservices-demo
+
+1. Clone the repo
+    ```bash
+    git clone https://github.com/ganadurai/microservices-demo.git
+    cd microservices-demo
+    git switch enable-apis
+    ```
+    
+1. Initialize:
+    ```bash
+    export WORKDIR=  #where the project is checked out
+    export PROJECT_ID=
+    gcloud config set project $PROJECT_ID
+    export REGION=us-central1
+    export ZONE=us-central1-b
+    export GCR_REPO="online-boutique"
+    export GCP_GCR_SA="gcp-gcr-service-account"
+    TOKEN_LOCATION="/home/admin_/$WORKDIR/kubernetes-manifests/api-client/gcp-gcr-service-account.json"
+    cd $WORKDIR/api-client-java/
+    ORG_ADMIN="admin@ganadurai.altostrat.com"
+    gcloud auth login $ORG_ADMIN
+    export TOKEN=$(gcloud auth print-access-token)
+    echo $TOKEN
+    alias k=kubectl
+    ```
+
+1. Install the gRPC client and package it.
+    ```bash
+    mvn clean install package spring-boot:repackage
+    ```
+
+1. Build the gRPC client exposing its endpoints
+    ```bash
+    docker build -t gcr.io/$PROJECT_ID/$GCR_REPO/api-client-java:v1 .
+    docker push gcr.io/$PROJECT_ID/$GCR_REPO/api-client-java:v1
+    ```
+
+1. Create Service account for the container to pull images from GCP respository
+    ```bash
+    gcloud iam service-accounts create $GCP_GCR_SA \
+        --project=$PROJECT_ID
+
+    gcloud projects add-iam-policy-binding $PROJECT_ID \
+        --member "serviceAccount:$GCP_GCR_SA@$PROJECT_ID.iam.gserviceaccount.com" \
+        --role "roles/containerregistry.ServiceAgent"
+
+    gcloud projects get-iam-policy $PROJECT_ID \
+        --flatten="bindings[].members" \
+        --format='table(bindings.role)' \
+        --filter="bindings.members:$GCP_GCR_SA@$PROJECT_ID.iam.gserviceaccount.com"
+
+    gcloud iam service-accounts keys create ${TOKEN_LOCATION} \
+        --iam-account=$GCP_GCR_SA@$PROJECT_ID.iam.gserviceaccount.com \
+        --project=$PROJECT_ID
+
+    k create secret docker-registry $GCP_GCR_SA-key \
+        --docker-server=gcr.io --docker-username=_json_key \
+        --docker-password="$(cat ${TOKEN_LOCATION})" \
+        --docker-email=$GCP_GCR_SA@$PROJECT_ID.iam.gserviceaccount.com \
+        -n $ONLINE_BOUTIQUE_NS
+
+    k patch serviceaccount default -p '{"imagePullSecrets": [{"name": "gcp-gcr-service-account-key"}]}'
+    ```
+
+1. Install the api-client kubernetes manifests
+    ```bash
+    cd $WORKDIR/kubernetes-manifests/api-client
+
+    IMAGE_PATH="gcr.io/$PROJECT_ID/$GCR_REPO/api-client-java:v1"
+    #Substitute the image path
+    envsubst < api-client-java-deployment.yaml > \
+    api-client-java-deployment.yaml
+
+    k apply -f api-client-java-deployment.yaml
+    k apply -f api-client-java-service.yaml
+    
+    k get pods
+    ```
+
+1. Fetch Ingress loadbalancer IP for the service created
+    ```bash
+    API_INGRESS_IP=$(k get svc api-client-java -o jsonpath={.status.loadBalancer.ingress..ip})
+
+    #Access the api endpoint:
+    echo "http://$API_INGRESS_IP/onlineboutique/products"
+    ```
+
+
+(Scratch Notes - Ignore the below, use it for reference if needed)
+
+
 1. Clone the repo
     ```bash
     git clone https://github.com/ganadurai/microservices-demo.git
@@ -116,5 +212,6 @@
 1. Portal Test User
     ganadurai+ob@google.com
     Onlineboutique<OnnuRenduMoonuNallu>!
+
 
 

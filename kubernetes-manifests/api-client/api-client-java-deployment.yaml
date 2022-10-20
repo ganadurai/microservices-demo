@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: api-client-java
-          image: gcr.io/asm-project-346001/online-boutique/api-client-java:v1
+          image: $IMAGE_PATH
           imagePullPolicy: Always
       restartPolicy: Always
       dnsPolicy: ClusterFirst
